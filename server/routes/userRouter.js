@@ -2,7 +2,10 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const validateEmail = require("../../shared/validateEmail");
 const User = require("../models/userModel");
+const auth = require("../middleware/auth");
+const { findByIdAndUpdate } = require("../models/userModel");
 
 /**
  * @route       POST user/signup
@@ -33,17 +36,24 @@ router.post("/signup", async (req, res) => {
         }
       }
     } else {
-      if (password.length < 5 || confirmPassword.length < 5) {
+      if (!validateEmail(email)) {
         return res.status(400).json({
           status: false,
-          message: "Password needs to be at least 5 characters long.",
+          message: "Please enter a valid email address.",
         });
       } else {
-        if (password !== confirmPassword) {
+        if (password.length < 5 || confirmPassword.length < 5) {
           return res.status(400).json({
             status: false,
-            message: "Please match passwords.",
+            message: "Password needs to be at least 5 characters long.",
           });
+        } else {
+          if (password !== confirmPassword) {
+            return res.status(400).json({
+              status: false,
+              message: "Please match passwords.",
+            });
+          }
         }
       }
     }
@@ -84,7 +94,6 @@ router.post("/signup", async (req, res) => {
     res.status(500).json({
       status: false,
       message: "Something went wrong!",
-      error: error.message,
     });
   }
 });
@@ -111,11 +120,18 @@ router.post("/signin", async (req, res) => {
         });
       }
     } else {
-      if (password.length < 5) {
+      if (!validateEmail(email)) {
         return res.status(400).json({
           status: false,
-          message: "Password needs to be at least 5 characters long.",
+          message: "Please enter a valid email address.",
         });
+      } else {
+        if (password.length < 5) {
+          return res.status(400).json({
+            status: false,
+            message: "Password needs to be at least 5 characters long.",
+          });
+        }
       }
     }
 
@@ -138,6 +154,7 @@ router.post("/signin", async (req, res) => {
         message: "Invalid credentials.",
       });
     }
+
     const token = jwt.sign(
       {
         id: user._id,
@@ -155,7 +172,68 @@ router.post("/signin", async (req, res) => {
     res.status(500).json({
       status: false,
       message: "Something went wrong!",
-      error: error.message,
+    });
+  }
+});
+
+/**
+ * @route       PATCH user/update
+ * @description Update account
+ * @access      Private
+ */
+router.patch("/update", auth, async (req, res) => {
+  try {
+    const userID = req.user;
+    const updates = req.body;
+    const options = {
+      new: true,
+    };
+
+    const updatedUser = await User.findByIdAndUpdate(userID, updates, options);
+
+    res.status(200).json({
+      status: true,
+      message: "User updated successfully.",
+      body: {
+        displayName: updatedUser.displayName,
+        email: updatedUser.email,
+      },
+    });
+  } catch (error) {
+    console.error(`${error.message}`.red);
+    res.status(500).json({
+      status: false,
+      message: "Something went wrong!",
+    });
+  }
+});
+
+/**
+ * @route       DELETE user/delete
+ * @description Delete account
+ * @access      Private
+ */
+router.delete("/delete", auth, async (req, res) => {
+  try {
+    const userID = req.user;
+    const deletedUser = await User.findByIdAndDelete(userID);
+
+    if (!deletedUser) {
+      return res.status(400).json({
+        status: false,
+        message: "User does not exist.",
+      });
+    }
+
+    res.status(200).json({
+      status: true,
+      message: "User deleted successfully.",
+    });
+  } catch (error) {
+    console.error(`${error.message}`.red);
+    res.status(500).json({
+      status: false,
+      message: "Something went wrong!",
     });
   }
 });
