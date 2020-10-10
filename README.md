@@ -11,6 +11,7 @@ This is a starter MERN Authentication app.
 2. Install dependencies
 
    - Install Project dependencies
+
      Path = mern-authentication
 
      ```bash
@@ -18,6 +19,7 @@ This is a starter MERN Authentication app.
      ```
 
    - Install Client dependencies
+
      Path = mern-authentication -> client
 
      ```bash
@@ -25,6 +27,7 @@ This is a starter MERN Authentication app.
      ```
 
    - Install Server dependencies
+
      Path = mern-authentication -> server
 
      ```bash
