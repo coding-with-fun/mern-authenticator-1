@@ -1,2 +1,3 @@
-# mern-authentication
-This is a starter MERN Authentication app
+# MERN Authentication
+
+This is a starter MERN Authentication app.
