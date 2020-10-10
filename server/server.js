@@ -20,7 +20,12 @@ app.use("/user", require("./routes/userRouter"));
 // Setup MongoDB
 mongoose.connect(
   process.env.MONGODB_CONNECTION_STRING,
-  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  },
   (err) => {
     if (err) throw err;
     console.info("Connected to MongoDB...".red);

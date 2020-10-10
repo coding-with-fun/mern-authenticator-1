@@ -189,6 +189,12 @@ router.patch("/update", auth, async (req, res) => {
       new: true,
     };
 
+    if (updates.password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashpass = await bcrypt.hash(updates.password, salt);
+      updates.password = hashpass;
+    }
+
     const updatedUser = await User.findByIdAndUpdate(userID, updates, options);
 
     res.status(200).json({

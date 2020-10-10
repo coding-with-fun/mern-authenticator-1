@@ -12,7 +12,6 @@ router.get("/details", auth, async (req, res) => {
     const userID = req.user;
 
     const user = await User.findById(userID);
-    console.info(user);
 
     res.status(200).json({
       status: true,
