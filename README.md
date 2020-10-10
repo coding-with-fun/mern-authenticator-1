@@ -1,4 +1,4 @@
-# MERN Authentication
+# MERN Authenticator
 
 This is a starter MERN Authentication app.
 
