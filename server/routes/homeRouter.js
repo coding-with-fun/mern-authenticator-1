@@ -3,11 +3,11 @@ const auth = require("../middleware/auth");
 const User = require("../models/userModel");
 
 /**
- * @route       GET /fetchDetails
+ * @route       GET /details
  * @description Home Page
- * @access      Public
+ * @access      Private
  */
-router.get("/fetchDetails", auth, async (req, res) => {
+router.get("/details", auth, async (req, res) => {
   try {
     const userID = req.user;
 
