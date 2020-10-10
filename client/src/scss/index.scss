@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import "./components/Body.scss";
+@import "./components/Footer.scss";
+@import "./components/Navbar.scss";
+@import "./components/PageNotFound.scss";
+@import "./components/SignIn.scss";
+@import "./components/SignUp.scss";
 
 * {
   margin: 0;
@@ -8,4 +14,16 @@
 
 body {
   font-family: "Poppins", sans-serif;
+  color: #ffffff;
+
+  background-image: url("../assets/bg.svg");
+  background-position: center 10%;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: 10%;
+  background-size: cover;
+  background-attachment: initial, initial;
+  background-origin: initial, initial;
+  background-clip: initial, initial;
+  background-color: #2b3137;
 }
