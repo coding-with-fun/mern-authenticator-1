@@ -2,10 +2,9 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const validateEmail = require("../../shared/validateEmail");
+const validateEmail = require("../shared/validateEmail");
 const User = require("../models/userModel");
 const auth = require("../middleware/auth");
-const { findByIdAndUpdate } = require("../models/userModel");
 
 /**
  * @route       POST user/signup
