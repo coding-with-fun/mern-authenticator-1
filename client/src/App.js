@@ -12,20 +12,22 @@ function App() {
     <Fragment>
       <Router>
         <Navbar />
-        <Switch>
-          <Route path="/signin">
-            <SignIn />
-          </Route>
-          <Route path="/signup">
-            <SignUp />
-          </Route>
-          <Route exact path="/">
-            <Body />
-          </Route>
-          <Route path="*">
-            <PageNotFound />
-          </Route>
-        </Switch>
+        <div className="body">
+          <Switch>
+            <Route path="/signin">
+              <SignIn />
+            </Route>
+            <Route path="/signup">
+              <SignUp />
+            </Route>
+            <Route exact path="/">
+              <Body />
+            </Route>
+            <Route path="*">
+              <PageNotFound />
+            </Route>
+          </Switch>
+        </div>
         <Footer />
       </Router>
     </Fragment>

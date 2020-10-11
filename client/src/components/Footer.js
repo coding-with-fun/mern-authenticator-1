@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <nav className="navbar footer fixed-bottom navbar-dark d-flex justify-content-center">
-      <div className="navbar-brand">
+      <div className="navbar-brand m-0">
         Made with{" "}
         <span>
           <i className="fas fa-heart"></i>
