@@ -1,8 +1,15 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, Route } from "react-router-dom";
 import Logo from "../assets/authentication.png";
+import { UserContext } from "../context/UserContext";
 
 const Navbar = () => {
+  const { userToken } = useContext(UserContext);
+
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+  };
+
   return (
     <nav className="navbar navbar-expand fixed-top navbar-dark">
       <Link to="/" className="navbar-brand">
@@ -24,13 +31,31 @@ const Navbar = () => {
               <Link to="/" className="dropdown-item">
                 Home
               </Link>
-              <Link to="/profile" className="dropdown-item">
-                Profile
-              </Link>
-              <div className="dropdown-divider"></div>
-              <Link to="/" className="dropdown-item">
-                Sign Out
-              </Link>
+              {userToken ? (
+                <>
+                  <Link to="/profile" className="dropdown-item">
+                    Profile
+                  </Link>
+                  <div className="dropdown-divider"></div>
+                  <Link
+                    to="/home"
+                    className="dropdown-item"
+                    onClick={handleSignOut}
+                  >
+                    Sign Out
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <div className="dropdown-divider"></div>
+                  <Link to="/signin" className="dropdown-item">
+                    Sign In
+                  </Link>
+                  <Link to="/signup" className="dropdown-item">
+                    Sign Up
+                  </Link>
+                </>
+              )}
             </div>
           </li>
         </ul>

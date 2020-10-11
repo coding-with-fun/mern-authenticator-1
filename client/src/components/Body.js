@@ -2,19 +2,20 @@ import React, { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 
 const Body = () => {
-  const { FetchDetails } = useContext(UserContext);
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  const { userData, FetchDetails } = useContext(UserContext);
 
-    if (token) {
-      FetchDetails(token);
+  const fetchUserDetails = () => {
+    const localUserToken = localStorage.getItem("token");
+    if (localUserToken) {
+      FetchDetails(localUserToken);
     }
+  };
+
+  useEffect(() => {
+    fetchUserDetails();
   }, []);
-  return (
-    <div>
-      <h1>Body</h1>
-    </div>
-  );
+
+  return <div>{userData ? <h1>Body</h1> : <h1>Guest</h1>}</div>;
 };
 
 export default Body;
