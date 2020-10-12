@@ -38,7 +38,7 @@ const App = () => {
             <PageNotFound />
           </Route>
           <Route path="*">
-            <PageNotFound />
+            <Redirect to="/404" />
           </Route>
         </Switch>
       </div>
