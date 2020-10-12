@@ -15,3 +15,12 @@ export const UserSignUp = async (body) => {
 
   return await Axios.post(URL, body);
 };
+
+export const UpdateUserDetails = async (body, token) => {
+  const URL = BASE_URL + "/update";
+  const headers = {
+    "x-auth-token": token,
+  };
+
+  return await Axios.patch(URL, body, { headers: headers });
+};

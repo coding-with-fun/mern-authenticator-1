@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
-import { UserSignIn, UserSignUp } from "../api/UserAuth";
-import { UserDetails } from "../api/UserData";
+import { UpdateUserDetails, UserSignIn, UserSignUp } from "../api/UserAuth";
+import { FetchUserDetails } from "../api/UserData";
 
 export const UserContext = createContext();
 
@@ -28,7 +28,6 @@ export const UserProvider = (props) => {
       })
       .catch((error) => {
         console.error(error.response);
-        localStorage.removeItem("token");
       });
   };
 
@@ -45,7 +44,6 @@ export const UserProvider = (props) => {
       })
       .catch((error) => {
         console.error(error.response);
-        localStorage.removeItem("token");
       });
   };
 
@@ -60,7 +58,7 @@ export const UserProvider = (props) => {
 
   const FetchDetails = async (token) => {
     if (token) {
-      UserDetails(token)
+      FetchUserDetails(token)
         .then((res) => {
           setUserData({
             user: res.data,
@@ -73,9 +71,21 @@ export const UserProvider = (props) => {
     }
   };
 
+  const UpdateUser = async (body, history) => {
+    const localToken = localStorage.getItem("token");
+    UpdateUserDetails(body, localToken)
+      .then((res) => {
+        FetchDetails(localToken);
+        history.push("/");
+      })
+      .catch((error) => {
+        console.error(error.response);
+      });
+  };
+
   return (
     <UserContext.Provider
-      value={{ userData, SignInUser, SignUpUser, SignOutUser }}
+      value={{ userData, SignInUser, SignUpUser, SignOutUser, UpdateUser }}
     >
       {props.children}
     </UserContext.Provider>
