@@ -10,6 +10,8 @@ export const UserProvider = (props) => {
     user: undefined,
   });
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   useEffect(() => {
     const localToken = localStorage.getItem("token");
     FetchDetails(localToken);
@@ -59,6 +61,7 @@ export const UserProvider = (props) => {
           setUserData({
             user: res.data,
           });
+          setIsAuthenticated(true);
         })
         .catch((error) => console.error(error.response));
     }
@@ -66,7 +69,7 @@ export const UserProvider = (props) => {
 
   return (
     <UserContext.Provider
-      value={{ userData, SignInUser, SignUpUser, SignOutUser }}
+      value={{ userData, isAuthenticated, SignInUser, SignUpUser, SignOutUser }}
     >
       {props.children}
     </UserContext.Provider>
