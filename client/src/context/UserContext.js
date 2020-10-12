@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { UserSignIn } from "../api/UserAuth";
+import { UserSignIn, UserSignUp } from "../api/UserAuth";
 import { UserDetails } from "../api/UserData";
 
 export const UserContext = createContext();
@@ -17,6 +17,20 @@ export const UserProvider = (props) => {
 
   const SignInUser = async (body, history) => {
     UserSignIn(body)
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        setUserData({
+          token: res.data.token,
+        });
+
+        FetchDetails(res.data.token);
+        history.push("/");
+      })
+      .catch((error) => console.error(error.response));
+  };
+
+  const SignUpUser = async (body, history) => {
+    UserSignUp(body)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
         setUserData({
@@ -51,7 +65,9 @@ export const UserProvider = (props) => {
   };
 
   return (
-    <UserContext.Provider value={{ userData, SignInUser, SignOutUser }}>
+    <UserContext.Provider
+      value={{ userData, SignInUser, SignUpUser, SignOutUser }}
+    >
       {props.children}
     </UserContext.Provider>
   );

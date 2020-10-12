@@ -8,3 +8,10 @@ export const UserSignIn = async (body) => {
 
   return await Axios.post(URL, body);
 };
+
+export const UserSignUp = async (body) => {
+  console.info(body);
+  const URL = BASE_URL + "/signup";
+
+  return await Axios.post(URL, body);
+};

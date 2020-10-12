@@ -26,22 +26,30 @@ const SignIn = () => {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     try {
-      if (!validateEmail(userEmail)) {
-        setErrorEmailMessage("Invalid email address.");
+      if (!userEmail) {
+        setErrorEmailMessage("Please fill in email address.");
       } else {
-        if (userPassword.length < 5) {
-          setErrorPasswordMessage(
-            "Password needs to be at least 5 characters long."
-          );
+        if (!userPassword) {
+          setErrorPasswordMessage("Please fill in password.");
         } else {
-          const body = {
-            email: userEmail,
-            password: userPassword,
-          };
+          if (!validateEmail(userEmail)) {
+            setErrorEmailMessage("Invalid email address.");
+          } else {
+            if (userPassword.length < 5) {
+              setErrorPasswordMessage(
+                "Password needs to be at least 5 characters long."
+              );
+            } else {
+              const body = {
+                email: userEmail,
+                password: userPassword,
+              };
 
-          SignInUser(body, history);
+              SignInUser(body, history);
+            }
+          }
         }
       }
     } catch (error) {
