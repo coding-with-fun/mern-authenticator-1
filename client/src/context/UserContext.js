@@ -50,6 +50,7 @@ export const UserProvider = (props) => {
       token: undefined,
       user: undefined,
     });
+    setIsAuthenticated(false);
     localStorage.removeItem("token");
     history.push("/");
   };
