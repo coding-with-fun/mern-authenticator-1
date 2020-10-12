@@ -1,4 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import "./components/Body.scss";
+@import "./components/Footer.scss";
+@import "./components/Navbar.scss";
+@import "./components/PageNotFound.scss";
+@import "./components/Profile.scss";
+@import "./components/SignIn.scss";
+@import "./components/SignUp.scss";
 
 * {
   margin: 0;
@@ -8,4 +15,43 @@
 
 body {
   font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  height: 86vh;
+
+  background-image: url("../assets/bg.svg");
+  background-position: center 10%;
+  background-position-x: center;
+  background-position-y: 10%;
+  background-size: auto;
+  background-attachment: initial, initial;
+  background-origin: initial, initial;
+  background-clip: initial, initial;
+  background-color: #2b3137;
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+.body {
+  margin: 60px 0;
+  overflow: scroll;
+  height: 83vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .body::-webkit-scrollbar {
+    display: none;
+  }
+
+  .body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

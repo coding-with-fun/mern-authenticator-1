@@ -1,0 +1,19 @@
+.navbar {
+  padding: 5px 30px;
+  background-color: #242a2f;
+
+  img {
+    height: 40px;
+    width: 40px;
+  }
+
+  i {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .navbar {
+    margin: 0 5px;
+  }
+}

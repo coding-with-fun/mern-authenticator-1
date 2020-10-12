@@ -36,4 +36,4 @@ This is a starter MERN Authentication app.
 
 ---
 
-**For reference please refer [wiki](https://github.com/harsh2124/mern-authentication/wiki/Project-Setup).**
+**For reference please refer [wiki](https://github.com/harsh2124/mern-authenticator/blob/development/setup.md).**
