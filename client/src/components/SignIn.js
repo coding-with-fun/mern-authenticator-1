@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import validateEmail from "../shared/validateEmail";
 
@@ -10,6 +10,7 @@ const SignIn = () => {
   const [errorPasswordMessage, setErrorPasswordMessage] = useState(null);
 
   const { SignInUser } = useContext(UserContext);
+  const localToken = localStorage.getItem("token");
   const history = useHistory();
 
   const handleChange = (e) => {
@@ -59,60 +60,66 @@ const SignIn = () => {
 
   return (
     <div className="signin_form">
-      <div className="form__content">
-        <div className="form__header">Please Sign In</div>
-        <form autoComplete="off">
-          <div className="form-group">
-            <label htmlFor="userEmail">Email address</label>
-            <input
-              type="text"
-              className="form-control"
-              value={userEmail}
-              onChange={(e) => handleChange(e)}
-              id="userEmail"
-              autoComplete="off"
-              aria-describedby="emailHelp"
-              autoFocus
-              required
-            />
-            <small
-              id="emailHelp"
-              className={`form-text text-muted ${
-                errorEmailMessage ? "visible" : "invisible"
-              }`}
-            >
-              {errorEmailMessage}
-            </small>
+      {localToken ? (
+        <Redirect to="/404" />
+      ) : (
+        <>
+          <div className="form__content">
+            <div className="form__header">Please Sign In</div>
+            <form autoComplete="off">
+              <div className="form-group">
+                <label htmlFor="userEmail">Email address</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={userEmail}
+                  onChange={(e) => handleChange(e)}
+                  id="userEmail"
+                  autoComplete="off"
+                  aria-describedby="emailHelp"
+                  autoFocus
+                  required
+                />
+                <small
+                  id="emailHelp"
+                  className={`form-text text-muted ${
+                    errorEmailMessage ? "visible" : "invisible"
+                  }`}
+                >
+                  {errorEmailMessage}
+                </small>
+              </div>
+              <div className="form-group">
+                <label htmlFor="userPassword">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  value={userPassword}
+                  onChange={(e) => handleChange(e)}
+                  id="userPassword"
+                  autoComplete="off"
+                  aria-describedby="passwordHelp"
+                  required
+                />
+                <small
+                  id="passwordHelp"
+                  className={`form-text text-muted ${
+                    errorPasswordMessage ? "visible" : "invisible"
+                  }`}
+                >
+                  {errorPasswordMessage}
+                </small>
+              </div>
+              <div className="btn btn-primary" onClick={handleSubmit}>
+                Sign In
+              </div>
+            </form>
           </div>
-          <div className="form-group">
-            <label htmlFor="userPassword">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              value={userPassword}
-              onChange={(e) => handleChange(e)}
-              id="userPassword"
-              autoComplete="off"
-              aria-describedby="passwordHelp"
-              required
-            />
-            <small
-              id="passwordHelp"
-              className={`form-text text-muted ${
-                errorPasswordMessage ? "visible" : "invisible"
-              }`}
-            >
-              {errorPasswordMessage}
-            </small>
+          <div className="path_to_signup">
+            Don't have a account? <Link to="/signup">Sign Up</Link>
           </div>
-          <div className="btn btn-primary" onClick={handleSubmit}>
-            Sign In
-          </div>
-        </form>
-      </div>
-      <div className="path_to_signup">
-        Don't have a account? <Link to="/signup">Sign Up</Link>
-      </div>
+        </>
+      )}
     </div>
   );
 };

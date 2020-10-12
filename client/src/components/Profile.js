@@ -1,12 +1,18 @@
-import React, { useContext } from "react";
-import { UserContext } from "../context/UserContext";
+import React from "react";
+import { Redirect } from "react-router-dom";
 
 const Profile = () => {
-  const { userData } = useContext(UserContext);
+  const localToken = localStorage.getItem("token");
 
   return (
-    <div className="container">
-      <h1>Profile</h1>
+    <div className="">
+      {!localToken ? (
+        <Redirect to="/404" />
+      ) : (
+        <>
+          <h1>Profile</h1>
+        </>
+      )}
     </div>
   );
 };
