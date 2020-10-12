@@ -12,7 +12,6 @@ export const UserProvider = (props) => {
 
   useEffect(() => {
     const localToken = localStorage.getItem("token");
-
     FetchDetails(localToken);
   }, []);
 
@@ -35,23 +34,24 @@ export const UserProvider = (props) => {
       token: undefined,
       user: undefined,
     });
+    localStorage.removeItem("token");
     history.push("/");
   };
 
   const FetchDetails = async (token) => {
-    UserDetails(token)
-      .then((res) => {
-        setUserData({
-          user: res.data,
-        });
-      })
-      .catch((error) => console.error(error.response));
+    if (token) {
+      UserDetails(token)
+        .then((res) => {
+          setUserData({
+            user: res.data,
+          });
+        })
+        .catch((error) => console.error(error.response));
+    }
   };
 
   return (
-    <UserContext.Provider
-      value={{ userData, SignInUser, SignOutUser, FetchDetails }}
-    >
+    <UserContext.Provider value={{ userData, SignInUser, SignOutUser }}>
       {props.children}
     </UserContext.Provider>
   );
