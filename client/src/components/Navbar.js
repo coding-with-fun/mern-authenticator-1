@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
-import { Link, Route } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Logo from "../assets/authentication.png";
 import { UserContext } from "../context/UserContext";
 
 const Navbar = () => {
-  const { userToken } = useContext(UserContext);
+  const { userData, SignOutUser } = useContext(UserContext);
+
+  const history = useHistory();
 
   const handleSignOut = () => {
-    localStorage.removeItem("token");
+    SignOutUser(history);
   };
 
   return (
@@ -31,14 +33,14 @@ const Navbar = () => {
               <Link to="/" className="dropdown-item">
                 Home
               </Link>
-              {userToken ? (
+              {userData.user ? (
                 <>
                   <Link to="/profile" className="dropdown-item">
                     Profile
                   </Link>
                   <div className="dropdown-divider"></div>
                   <Link
-                    to="/home"
+                    to="/"
                     className="dropdown-item"
                     onClick={handleSignOut}
                   >
