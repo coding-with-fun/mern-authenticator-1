@@ -40,6 +40,10 @@ body {
 .body {
   margin: 60px 0;
   overflow: scroll;
+  height: 83vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .body::-webkit-scrollbar {
     display: none;
