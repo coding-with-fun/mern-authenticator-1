@@ -10,8 +10,6 @@ export const UserProvider = (props) => {
     user: undefined,
   });
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   useEffect(() => {
     const localToken = localStorage.getItem("token");
     FetchDetails(localToken);
@@ -28,7 +26,10 @@ export const UserProvider = (props) => {
         FetchDetails(res.data.token);
         history.push("/");
       })
-      .catch((error) => console.error(error.response));
+      .catch((error) => {
+        console.error(error.response);
+        localStorage.removeItem("token");
+      });
   };
 
   const SignUpUser = async (body, history) => {
@@ -42,7 +43,10 @@ export const UserProvider = (props) => {
         FetchDetails(res.data.token);
         history.push("/");
       })
-      .catch((error) => console.error(error.response));
+      .catch((error) => {
+        console.error(error.response);
+        localStorage.removeItem("token");
+      });
   };
 
   const SignOutUser = (history) => {
@@ -50,7 +54,6 @@ export const UserProvider = (props) => {
       token: undefined,
       user: undefined,
     });
-    setIsAuthenticated(false);
     localStorage.removeItem("token");
     history.push("/");
   };
@@ -62,15 +65,17 @@ export const UserProvider = (props) => {
           setUserData({
             user: res.data,
           });
-          setIsAuthenticated(true);
         })
-        .catch((error) => console.error(error.response));
+        .catch((error) => {
+          console.error(error.response);
+          localStorage.removeItem("token");
+        });
     }
   };
 
   return (
     <UserContext.Provider
-      value={{ userData, isAuthenticated, SignInUser, SignUpUser, SignOutUser }}
+      value={{ userData, SignInUser, SignUpUser, SignOutUser }}
     >
       {props.children}
     </UserContext.Provider>

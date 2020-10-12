@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -12,11 +12,8 @@ import PageNotFound from "./components/PageNotFound";
 import Profile from "./components/Profile";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import { UserContext } from "./context/UserContext";
 
 const App = () => {
-  const { isAuthenticated } = useContext(UserContext);
-
   return (
     <Router>
       <Navbar />
@@ -26,13 +23,13 @@ const App = () => {
             <Body />
           </Route>
           <Route path="/profile">
-            {isAuthenticated ? <Profile /> : <Redirect to="/404" />}
+            <Profile />
           </Route>
           <Route path="/signin">
-            {isAuthenticated ? <Redirect to="/404" /> : <SignIn />}
+            <SignIn />
           </Route>
           <Route path="/signup">
-            {isAuthenticated ? <Redirect to="/404" /> : <SignUp />}
+            <SignUp />
           </Route>
           <Route path="/404">
             <PageNotFound />
